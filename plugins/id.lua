@@ -13,12 +13,14 @@ end
 
 
 function getID_by_reply_cb(arg, msg)
-    send_msg(msg.chat_id_, lang_text(msg.to.id, 'userID') .. " " .. msg.sender_user_id_ .. "\n" .. lang_text(msg.to.id, 'chatID') .. " " .. msg.chat_id_, "md")
+    local text = gettext(ln.id.dataId, msg.sender_user_id_, msg.chat_id_)
+    send_msg(msg.chat_id_, text, "md")
 end
 
 local function run(msg, matches)
     if not msg.reply_id then
-    	send_msg(msg.to.id, lang_text(msg.to.id, 'userID') .. " " .. msg.from.id ..  "\n" .. lang_text(msg.to.id, 'chatID') .. " " .. msg.to.id, "md")
+        local text = gettext(ln.id.dataId, msg.from.id, msg.to.id)
+        send_msg(msg.to.id, text, "md")
     else
     	send_ID_by_reply(msg.to.id, msg.reply_id)
     end

@@ -72,47 +72,47 @@ function oldtg(data)
     end
     if data.message_.content_.ID == "MessagePhoto" then
         msg.photo = true
-		if data.message_.content_.photo_.sizes_[3] then 
-			msg.file_id = data.message_.content_.photo_.sizes_[3].photo_.persistent_id_
-		else
-			msg.file_id = data.message_.content_.photo_.sizes_[0].photo_.persistent_id_
-		end
+        if data.message_.content_.photo_.sizes_[3] then
+            msg.file_id = data.message_.content_.photo_.sizes_[3].photo_.persistent_id_
+        else
+            msg.file_id = data.message_.content_.photo_.sizes_[0].photo_.persistent_id_
+        end
     else
         msg.photo = false
     end
     if data.message_.content_.ID == "MessageSticker" then
         msg.sticker = true
-		msg.file_id = data.message_.content_.sticker_.sticker_.persistent_id_
+        msg.file_id = data.message_.content_.sticker_.sticker_.persistent_id_
     else
         msg.sticker = false
     end
     if data.message_.content_.ID == "MessageAudio" then
         msg.audio = true
-		msg.file_id = data.message_.content_.audio_.audio_.persistent_id_
+        msg.file_id = data.message_.content_.audio_.audio_.persistent_id_
     else
         msg.audio = false
     end
     if data.message_.content_.ID == "MessageVoice" then
         msg.voice = true
-		msg.file_id = data.message_.content_.voice_.voice_.persistent_id_
+        msg.file_id = data.message_.content_.voice_.voice_.persistent_id_
     else
         msg.voice = false
     end
     if data.message_.content_.ID == "MessageAnimation" then
         msg.gif = true
-		msg.file_id = data.message_.content_.animation_.animation_.persistent_id_
+        msg.file_id = data.message_.content_.animation_.animation_.persistent_id_
     else
         msg.gif = false
     end
     if data.message_.content_.ID == "MessageVideo" then
         msg.video = true
-		msg.file_id = data.message_.content_.video_.video_.persistent_id_
+        msg.file_id = data.message_.content_.video_.video_.persistent_id_
     else
         msg.video = false
     end
     if data.message_.content_.ID == "MessageDocument" then
         msg.document = true
-		msg.file_id = data.message_.content_.document_.document_.persistent_id_
+        msg.file_id = data.message_.content_.document_.document_.persistent_id_
     else
         msg.document = false
     end
@@ -121,20 +121,20 @@ function oldtg(data)
     else
         msg.game = false
     end
-	if data.message_.forward_info_ then
-		msg.forward = true
-		msg.forward = {}
-		msg.forward.from_id = data.message_.forward_info_.sender_user_id_
-		msg.forward.msg_id = data.message_.forward_info_.data_
-	else
-		msg.forward = false
-	end
+    if data.message_.forward_info_ then
+        msg.forward = true
+        msg.forward = {}
+        msg.forward.from_id = data.message_.forward_info_.sender_user_id_
+        msg.forward.msg_id = data.message_.forward_info_.data_
+    else
+        msg.forward = false
+    end
     if data.message_.content_.ID then
         msg.action = data.message_.content_.ID
     end
     if data.message_.content_.ID == "MessageChatAddMembers" or data.message_.content_.ID == "MessageChatDeleteMember" or
-        data.message_.content_.ID == "MessageChatChangeTitle" or data.message_.content_.ID == "MessageChatChangePhoto" or
-        data.message_.content_.ID == "MessageChatJoinByLink" or data.message_.content_.ID == "MessageGameScore" then
+    data.message_.content_.ID == "MessageChatChangeTitle" or data.message_.content_.ID == "MessageChatChangePhoto" or
+    data.message_.content_.ID == "MessageChatJoinByLink" or data.message_.content_.ID == "MessageGameScore" then
         msg.service = true
     else
         msg.service = false
@@ -353,9 +353,9 @@ function send_large_msg(chat_id, text)
         if num_msg <= 1 then
             send_msg(destination, text, 'md')
         else
-        text = rest
+            text = rest
+        end
     end
-  end
 end
 
 function scandir(directory)
@@ -442,61 +442,71 @@ function trim(text)
 end
 
 function underline(text, underline_spaces)
-  local chars = {}
-  local text_str = ""
-  local symbol = trim(" ̲")
-  for i=1, #text do
-      table.insert(chars, text:sub(i, i))
-  end
-  for i=1, #chars do
-      space = chars[i] == ' '
-      if (not space) then
-          text_str = text_str..chars[i]..symbol
-      elseif (underline_spaces) then
-          text_str = text_str..chars[i]..symbol
-      else
-          text_str = text_str..chars[i]
-      end
-  end
-  return text_str
+    local chars = {}
+    local text_str = ""
+    local symbol = trim(" ̲")
+    for i=1, #text do
+        table.insert(chars, text:sub(i, i))
+    end
+    for i=1, #chars do
+        space = chars[i] == ' '
+        if (not space) then
+            text_str = text_str..chars[i]..symbol
+        elseif (underline_spaces) then
+            text_str = text_str..chars[i]..symbol
+        else
+            text_str = text_str..chars[i]
+        end
+    end
+    return text_str
 end
 
 function up_underline(text, underline_spaces)
-  local chars = {}
-  local text_str = ""
-  local symbol = trim(" ̅ ")
-  for i=1, #text do
-      table.insert(chars, text:sub(i, i))
-  end
-  for i=1, #chars do
-      space = chars[i] == ' '
-      if (not space) then
-          text_str = text_str..chars[i]..symbol
-      elseif (underline_spaces) then
-          text_str = text_str..chars[i]..symbol
-      else
-          text_str = text_str..chars[i]
-      end
-  end
-  return text_str
+    local chars = {}
+    local text_str = ""
+    local symbol = trim(" ̅ ")
+    for i=1, #text do
+        table.insert(chars, text:sub(i, i))
+    end
+    for i=1, #chars do
+        space = chars[i] == ' '
+        if (not space) then
+            text_str = text_str..chars[i]..symbol
+        elseif (underline_spaces) then
+            text_str = text_str..chars[i]..symbol
+        else
+            text_str = text_str..chars[i]
+        end
+    end
+    return text_str
 end
 
 function strike_out(text, underline_spaces)
-  local chars = {}
-  local text_str = ""
-  local symbol = trim(" ̶")
-  for i=1, #text do
-      table.insert(chars, text:sub(i, i))
-  end
-  for i=1, #chars do
-      space = chars[i] == ' '
-      if (not space) then
-          text_str = text_str..chars[i]..symbol
-      elseif (underline_spaces) then
-          text_str = text_str..chars[i]..symbol
-      else
-          text_str = text_str..chars[i]
-      end
-  end
-  return text_str
+    local chars = {}
+    local text_str = ""
+    local symbol = trim(" ̶")
+    for i=1, #text do
+        table.insert(chars, text:sub(i, i))
+    end
+    for i=1, #chars do
+        space = chars[i] == ' '
+        if (not space) then
+            text_str = text_str..chars[i]..symbol
+        elseif (underline_spaces) then
+            text_str = text_str..chars[i]..symbol
+        else
+            text_str = text_str..chars[i]
+        end
+    end
+    return text_str
+end
+
+function gettext(str, ...)
+    return string.format(str, ...)
+end
+
+function get_lang(table, msg)
+    if not msg.to and msg.to.id then return nil end
+    local lang = redis:hget("lang_dbteam", msg.to.id) or _config.default_lang or "en"
+    return table[lang]
 end

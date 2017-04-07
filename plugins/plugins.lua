@@ -24,7 +24,7 @@ do
 	end
 
 	local function list_plugins(only_enabled)
-	    local text = '*'..lang_text(to_id, 'pluginsActivated')..':*\n'
+	    local text = gettext(ln.plugins.activated)
 	    local psum = 0
 	    for k, v in pairs( plugins_names( )) do
 	        --  ✅ enabled, ❎ disabled
@@ -55,9 +55,9 @@ do
 	    plugins = {}
 	    load_plugins()
 	    if de == 'en' then
-	        return lang_text(to_id, 'pluginEnabled')
+	        return gettext(ln.plugins.enabled)
 	    elseif de == 'di' then
-	        return lang_text(to_id, 'pluginDisabled')
+	        return gettext(ln.plugins.disabled)
 	    end
 	end
 
@@ -65,7 +65,7 @@ do
 	local function enable_plugin(plugin_name)
 	    -- Check if plugin is enabled
 	    if plugin_enabled(plugin_name) then
-	        return lang_text(to_id, 'pluginIsEnabled')
+	        return gettext(ln.plugins.isEnabled)
 	    end
 	    -- Checks if plugin exists
 	    if plugin_exists(plugin_name) then
@@ -75,19 +75,19 @@ do
 	        -- Reload the plugins
 	        return reload_plugins('en')
 	    else
-	        return lang_text(to_id, 'pluginNoExist'):gsub("$name", plugin_name)
+	        return gettext(ln.plugins.noExist, plugin_name)
 	    end
 	end
 
 	local function disable_plugin(plugin_name)
 	    -- Check if plugins exists
 	    if not plugin_exists(plugin_name) then
-	        return lang_text(to_id, 'pluginNoExist'):gsub("$name", plugin_name)
+	        return gettext(ln.plugins.noExist, plugin_name)
 	    end
 	    local k = plugin_enabled(plugin_name)
 	    -- Check if plugin is enabled
 	    if not k then
-	        return lang_text(to_id, 'pluginNoEnabled')
+	        return gettext(ln.plugins.noEnabled)
 	    end
 	    -- Disable and reload
 	    table.remove(_config.enabled_plugins, k)
@@ -112,7 +112,7 @@ do
 	        end
 	        -- Reload all the plugins!
 	        if matches[1] == 'reload' then
-				send_msg(msg.to.id, lang_text(msg.to.id, 'pluginsReload'), "md")
+				send_msg(msg.to.id, gettext(ln.plugins.reload), "md")
 	            return reload_plugins(true)
 	        end
 
@@ -120,7 +120,7 @@ do
 	            return list_plugins()
 	        end
 	    else
-	        return lang_text(msg.to.id, 'require_sudo')
+	        return gettext(ln.errors.require_sudo)
 	    end
 	end
 

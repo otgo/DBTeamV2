@@ -38,9 +38,9 @@ function load_config( )
     if not f then
         create_config()
         print ("Created new config file: data/config.lua")
-		redis:sadd("start", "settings")
+        redis:sadd("start", "settings")
     else
-		redis:sadd("load", "settings")
+        redis:sadd("load", "settings")
         f:close()
     end
     local config = loadfile ("./data/config.lua")()
@@ -53,6 +53,7 @@ end
 function create_config()
     -- A simple config with basic plugins and ourselves as privileged user
     config = {
+        default_lang = "en",
         enabled_plugins = {
             "settings",
             "id",
@@ -61,10 +62,10 @@ function create_config()
             "commands",
             "plugins",
             "stats",
-			"gbans",
-			"extra",
-			"langs",
-			"private"
+            "gbans",
+            "extra",
+            "langs",
+            "private"
         },
         enabled_lang = {
             "english_lang"
@@ -90,31 +91,27 @@ function load_plugins()
     end
 end
 
-function load_lang()
+function load_langs()
+    local lang_table = {}
+    local path = 'lang/'
     for k, v in pairs(_config.enabled_lang) do
-        print('\27[92mLoading language '.. v..'\27[39m')
-
-        local ok, err = pcall(function()
-        local t = loadfile("./lang/"..v..'.lua')()
-            plugins[v] = t
-        end)
-
-        if not ok then
-            print('\27[31mError loading language '..v..'\27[39m')
-            print(tostring(io.popen("lua lang/"..v..".lua"):read('*all')))
-            print('\27[31m'..err..'\27[39m')
+        local val = require(path..v)
+        for m,d in pairs(val) do
+            lang_table[m] = val[m]
         end
     end
+    return lang_table
 end
 
 _config = load_config()
 -- load plugins
 plugins = {}
 load_plugins()
-load_lang()
+langs = load_langs()
 
 function bot_init(msg)
     receiver = msg.to.id
+    ln = get_lang(langs, msg)
 
     --Idea from https://github.com/RememberTheAir/GroupButler/blob/master/bot.lua
     if msg.from then
@@ -122,8 +119,8 @@ function bot_init(msg)
             redis:hset('bot:usernames', '@'..msg.from.username:lower(), msg.from.id)
             redis:hset('bot:ids', msg.from.id, '@'.. msg.from.username:lower())
         else
-        	redis:hset('bot:usernames', '@' .. msg.from.first_name:lower(), msg.from.id)
-        	redis:hset('bot:ids', msg.from.id, msg.from.first_name:lower())
+            redis:hset('bot:usernames', '@' .. msg.from.first_name:lower(), msg.from.id)
+            redis:hset('bot:ids', msg.from.id, msg.from.first_name:lower())
         end
         redis:sadd('chat:' .. msg.to.id .. ':members', msg.from.id)
     end
@@ -136,13 +133,13 @@ function bot_init(msg)
 
     if msg.reply_id then
         redis:sadd('chat:' .. msg.to.id .. ':members', msg.replied.id)
-		if msg.replied.username then
-			redis:hset('bot:usernames', '@'.. msg.replied.username:lower(), msg.replied.id)
-			redis:hset('bot:ids', msg.replied.id, '@'..msg.replied.username:lower())
-		else
-			redis:hset('bot:usernames', msg.replied.first_name:lower(), msg.replied.id)
-			redis:hset('bot:ids', msg.replied.id, msg.replied.first_name:lower())
-		end
+        if msg.replied.username then
+            redis:hset('bot:usernames', '@'.. msg.replied.username:lower(), msg.replied.id)
+            redis:hset('bot:ids', msg.replied.id, '@'..msg.replied.username:lower())
+        else
+            redis:hset('bot:usernames', msg.replied.first_name:lower(), msg.replied.id)
+            redis:hset('bot:ids', msg.replied.id, msg.replied.first_name:lower())
+        end
     end
 
     if msg.to.id ~= msg.from.id then 		-- If it is not a private chat
@@ -156,12 +153,12 @@ function bot_init(msg)
     if msg_valid(msg) then
         msg = pre_process_msg(msg)
         if msg then
-			if msg.from.id == msg.to.id then 	-- match special plugins in private
-				match_plugin(plugins.private, private, msg)
-			else
-				match_plugins(msg)
-			end
-			mark_as_read(msg.to.id, {[0] = msg.id})
+            if msg.from.id == msg.to.id then 	-- match special plugins in private
+                match_plugin(plugins.private, private, msg)
+            else
+                match_plugins(msg)
+            end
+            mark_as_read(msg.to.id, {[0] = msg.id})
         end
     end
 
@@ -207,20 +204,20 @@ function tdcli_update_callback(data)
                 do_notify(chat.title_, msgb.content_.ID)
             end
         end
-		
-		if redis:sismember("start", "settings") then
-			redis:srem("start", "settings")
-			changeAbout("DBTeamV2 Tg-cli administration Bot\nChannels: @DBTeamEn @DBTeamEs", ok_cb)
-			getMe(getMeCb)
-		elseif redis:sismember("load", "settings") then
-			redis:srem("load", "settings")
-			-- This loads to cache most of users, chats, channels .. that are removed in every reboot
-			getChats(2^63 - 1, 0, 20, ok_cb)
-			-- This opens all chats and channels in order to receive updates
-			for k, chat in pairs (redis:smembers('chats:ids')) do
-				 openChat(chat, ok_cb)
-			end
-		end
+
+        if redis:sismember("start", "settings") then
+            redis:srem("start", "settings")
+            changeAbout("DBTeamV2 Tg-cli administration Bot\nChannels: @DBTeamEn @DBTeamEs", ok_cb)
+            getMe(getMeCb)
+        elseif redis:sismember("load", "settings") then
+            redis:srem("load", "settings")
+            -- This loads to cache most of users, chats, channels .. that are removed in every reboot
+            getChats(2^63 - 1, 0, 20, ok_cb)
+            -- This opens all chats and channels in order to receive updates
+            for k, chat in pairs (redis:smembers('chats:ids')) do
+                openChat(chat, ok_cb)
+            end
+        end
 
         msg = oldtg(data)
         tdcli_function ({
@@ -309,7 +306,7 @@ function match_plugin(plugin, plugin_name, msg)
             -- Function exists
             if plugin.run then
                 -- If plugin is for privileged users only
-                local result = plugin.run(msg, matches)
+                local result = plugin.run(msg, matches, ln)
                 if result then
                     send_msg(receiver, result, "md")
                 end

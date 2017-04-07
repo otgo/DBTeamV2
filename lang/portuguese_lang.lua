@@ -10,315 +10,290 @@
 --                                              --
 --------------------------------------------------
 
-local LANG = 'pt'
-
-local function run(msg, matches)
-	if permissions(msg.from.id, msg.to.id, "lang_install") then
-
-		-------------------------
-		-- Translation version --
-		-------------------------
-		set_text(LANG, 'version', '1.0')
-		set_text(LANG, 'versionExtended', 'Versão da tradução 1.0')
-
-		-------------
-		-- Plugins --
-		-------------
-
-		-- global plugins --
-		set_text(LANG, 'require_sudo', 'Este plugin requer privilégios de sudo.')
-		set_text(LANG, 'require_admin', 'Este plugin requer privilégios de administrador ou superior.')
-		set_text(LANG, 'require_mod', 'Este plugin requer privilégios de moderador ou superior.')
-
-		-- welcome.lua
-		set_text(LANG, 'weloff', 'Bem-vindo ativado.')
-		set_text(LANG, 'welon', 'Bem-vindo desativado.')
-		set_text(LANG, 'weldefault', 'O bem-vindo é o padrão.')
-		set_text(LANG, 'welnew', 'Bem-vindo salvo! é')
-		set_text(LANG, 'defaultWelcome', 'Bem-vindo $users ao grupo!')
-
-
-
-		-- stats.lua
-		set_text(LANG, 'stats', '*Chat stats*')
-
-
-		-- settings.lua --
-		set_text(LANG, 'user', 'User')
-		set_text(LANG, 'isFlooding', '*is flooding.*')
-		set_text(LANG, 'isSpamming', '*is spamming.*')
-
-		set_text(LANG, 'welcomeT', '> *Welcome messages* are now *enabled* in this chat.')
-		set_text(LANG, 'noWelcomeT', '> *Welcome messages* are *disabled* in this chat.')
-
-		set_text(LANG, 'noStickersT', '`>` *Stickers* are *not allowed* in this chat.')
-		set_text(LANG, 'stickersT', '`>` *Stickers* are now *allowed* in this chat.')
-
-		set_text(LANG, 'noTgservicesT', '`>` *Telegram services disabled* in this chat.')
-		set_text(LANG, 'tgservicesT', '`>` *Telegram services enabled* in this chat.')
-
-		set_text(LANG, 'gifsT', '`>` *Gifs* are now *allowed* in this chat.')
-		set_text(LANG, 'noGifsT', '`>` *Gifs* are *not allowed* in this chat.')
-
-		set_text(LANG, 'photosT', '`>` *Photos* are now `allowed` in this chat.')
-		set_text(LANG, 'noPhotosT', '`>` *Photos* are *not allowed* in this chat.')
-
-		set_text(LANG, 'botsT', '`>` *Bots* are now allowed in this chat.')
-		set_text(LANG, 'noBotsT', '`>` Bots are not allowed in this chat.')
-
-		set_text(LANG, 'arabicT', '`>` *Arabic* is now *allowed* in this chat.')
-		set_text(LANG, 'noArabicT', '`>` *Arabic* is *not allowed* in this chat.')
-
-		set_text(LANG, 'audiosT', '`>` *Audios* are now *allowed* in this chat.')
-		set_text(LANG, 'noAudiosT', '`>` *Audios* are *not allowed* in this chat.')
-
-		set_text(LANG, 'documentsT', '`>` *Documents* are now *allowed* in this chat.')
-		set_text(LANG, 'noDocumentsT', '`>` *Documents* are *not allowed* in this chat.')
-
-		set_text(LANG, 'videosT', '`>` *Videos* are now *allowed* in this chat.')
-		set_text(LANG, 'noVideosT', '`>` *Videos* are *not allowed* in this chat.')
-
-		set_text(LANG, 'locationT', '`>` *Location* is now *allowed* in this chat.')
-		set_text(LANG, 'noLocationT', '`>` *Location* is *not allowed* in this chat.')
-
-		set_text(LANG, 'emojisT', '`>` *Emojis* are now *allowed* in this chat.')
-		set_text(LANG, 'noEmojisT', '`>` *Emojis* are *not allowed* in this chat.')
-
-		set_text(LANG, 'englishT', '`>` *English* is now *allowed* in this chat.')
-		set_text(LANG, 'noEnglishT', '`>` *English* is *not allowed* in this chat.')
-
-		set_text(LANG, 'inviteT', '`>` *Invite* is now *allowed* in this chat.')
-		set_text(LANG, 'noInviteT', '`>` *Invite* is *not allowed* in this chat.')
-
-		set_text(LANG, 'voiceT', '`>` *Voice messages* are now *allowed* in this chat.')
-		set_text(LANG, 'noVoiceT', '`>` *Voice messages* are *not allowed* in this chat.')
-
-		set_text(LANG, 'infoT', '`>` *Photo/title* can be changed in this chat.')
-		set_text(LANG, 'noInfoT', '`>` *Photo/title* can\'t be changed in this chat.')
-
-		set_text(LANG, 'gamesT', '`>` *Games* are now *allowed* in this chat.')
-		set_text(LANG, 'noGamesT', '`>` *Games* are *not allowed* in this chat.')
-
-		set_text(LANG, 'spamT', '`>` *Spam* is now *allowed* in this chat.')
-		set_text(LANG, 'noSpamT', '`>` *Spam* is *not allowed* in this chat.')
-		set_text(LANG, 'setSpam', '`>` Changed blacklist to ')
-
-		set_text(LANG, 'forwardT', '`>` *Forward messages* is now *allowed* in this chat.')
-		set_text(LANG, 'noForwardT', '`>` *Forward messages* is not *allowed* in this chat.')
-
-		set_text(LANG, 'floodT', '`>` *Flood* is now *allowed* in this chat.')
-		set_text(LANG, 'noFloodT', '`>` *Flood* is *not allowed* in this chat.')
-
-		set_text(LANG, 'floodTime', '`>` *Flood time* check has been set to ')
-		set_text(LANG, 'floodMax', '`>` *Max flood* messages have been set to ')
-
-		set_text(LANG, 'gSettings', 'chat settings')
-
-		set_text(LANG, 'allowed', 'allowed')
-		set_text(LANG, 'noAllowed', 'not allowed')
-		set_text(LANG, 'noSet', 'not set')
-
-		set_text(LANG, 'stickers', 'Stickers')
-		set_text(LANG, 'tgservices', 'Tg services')
-		set_text(LANG, 'links', 'Links')
-		set_text(LANG, 'arabic', 'Arabic')
-		set_text(LANG, 'bots', 'Bots')
-		set_text(LANG, 'gifs', 'Gifs')
-		set_text(LANG, 'photos', 'Photos')
-		set_text(LANG, 'audios', 'Audios')
-		set_text(LANG, 'kickme', 'Kickme')
-		set_text(LANG, 'spam', 'Spam')
-		set_text(LANG, 'gName', 'Group Name')
-		set_text(LANG, 'flood', 'Flood')
-		set_text(LANG, 'language', 'Language')
-		set_text(LANG, 'mFlood', 'Max flood')
-		set_text(LANG, 'tFlood', 'Flood time')
-		set_text(LANG, 'setphoto', 'Set photo')
-
-		set_text(LANG, 'forward', 'Forward')
-		set_text(LANG, 'videos', 'Videos')
-		set_text(LANG, 'invite', 'Invite')
-		set_text(LANG, 'games', 'Games')
-		set_text(LANG, 'documents', 'Documents')
-		set_text(LANG, 'location', 'Location')
-		set_text(LANG, 'voice', 'Voice')
-		set_text(LANG, 'icontitle', 'Change icon/title')
-		set_text(LANG, 'english', 'English')
-		set_text(LANG, 'emojis', 'Emojis')
-		--Made with @TgTextBot by @iicc1
-		set_text(LANG, 'groupSettings', 'G̲r̲o̲u̲p̲ s̲e̲t̲t̲i̲n̲g̲s̲')
-		set_text(LANG, 'allowedMedia', 'A̲l̲l̲o̲w̲e̲d̲ m̲e̲d̲i̲a̲')
-		set_text(LANG, 'settingsText', 'T̲e̲x̲t̲')
-
-		set_text(LANG, 'langUpdated', 'Your language has been updated to: ')
-
-		set_text(LANG, 'linkSet', '`>` *New link* has been *set*')
-		set_text(LANG, 'linkError', '`>` Need *creator rights* to export chat invite link.')
-
-		set_text(LANG, 'newRules', '`>` *New rules* have been *created.*')
-		set_text(LANG, 'rulesDefault', '`>` Your previous *rules have been removed.*')
-		set_text(LANG, 'noRules', '`>` *There are no visible rules* in this group.')
-		set_text(LANG, 'defaultRules', '*Chat rules:*\n`>` No Flood.\n`>` No Spam.\n`>` Try to stay on topic.\n`>` Forbidden any racist, sexual, gore content...\n\n_Repeated failure to comply with these rules will cause ban._')
-
-		set_text(LANG, 'delAll', '`>` All messages *cleared*.')
-
-		-- export_gban.lua --
-		set_text(LANG, 'accountsGban', 'accounts globally banned.')
-
-		-- promote.lua --
-		set_text(LANG, 'alreadyAdmin', 'Este usuário já é um *admin.*')
-		set_text(LANG, 'alreadyMod', 'Este usuário já é um *mod.*')
-
-		set_text(LANG, 'newAdmin', '<code>></code> <b>New admin</b>')
-		set_text(LANG, 'newMod', '<code>></code> <b>New mod</b>')
-		set_text(LANG, 'nowUser', ' <b>is now an user.</b>')
-
-		set_text(LANG, 'modList', '`>` *Lista de Moderadores*')
-		set_text(LANG, 'adminList', '`>` *Lista de Administradores')
-		set_text(LANG, 'modEmpty', '*Lista de moderadores está vazia* neste grupo.')
-		set_text(LANG, 'adminEmpty', '*Lista de administradores vazia.*')
-		set_text(LANG, 'error1', '<b>Error:</b> must be a supergroup.')
-		set_text(LANG, 'error2', '<b>Error:</b> must be a supergroup and admin of the chat.')
-		set_text(LANG, 'banall', '<b>Trying to ban all users...</b>')
-		set_text(LANG, 'setAbout', '<b>About changed to: </b>')
-		set_text(LANG, 'leave', '<b>Bye!</b>')
-		-- gban.lua --
-		set_text(LANG, 'gbans', '<b>Globally banned users (</b>')
-		set_text(LANG, 'gbanLua', ' users globally banned from LUA file!')
-		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
-		set_text(LANG, 'gbanJson', ' users globally banned from JSON file!')
-		set_text(LANG, 'gbanDel', 'Gbans database removed.')
-
-		-- id.lua --
-		set_text(LANG, 'user', 'Usuário')
-		set_text(LANG, 'chatName', 'Nome do Grupo')
-		set_text(LANG, 'chat', 'Grupo')
-		set_text(LANG, 'userID', '*User ID:*')
-		set_text(LANG, 'chatID', '*Chat ID:*')
-
-		-- moderation.lua --
-		set_text(LANG, 'kickUser', '`>` The user has been *kicked out.*')
-		set_text(LANG, 'banUser', '`>` The user has been *banned.*')
-		set_text(LANG, 'unbanUser', '`>` The user has been *removed* from *ban list.*')
-		set_text(LANG, 'gbanUser', '`>` The user has been *globally banned*.')
-		set_text(LANG, 'ungbanUser', '`>` The user has been *removed* from *global ban list.*')
-		set_text(LANG, 'muteUser', '`>` The user has been *muted.*')
-		set_text(LANG, 'muteChat', '`>` The chat has been *muted.*')
-		set_text(LANG, 'muteChatSec', '`>` The chat has been *muted* for ')
-		set_text(LANG, 'muteUserSec', '`>` The user has been *muted* for ')
-		set_text(LANG, 'unmuteUser', '`>` The user *can talk now.*')
-		set_text(LANG, 'unmuteChat', '`>` The users *can talk now.*')
-
-		set_text(LANG, 'delXMsg', '`>` User $user *has deleted* `$num messages`.')
-
-		-- commands.lua --
-		set_text(LANG, 'commandsT', 'Comando')
-		set_text(LANG, 'errorNoPlug', 'Este plugin não existe ou não tem comandos.')
-
-		-- plugins.lua --
-
-		set_text(LANG, 'pluginsActivated', '*Plugins enabled:*\n')
-		set_text(LANG, 'pluginNoExist', '`>` *Plugin* $name does *not exist*.')
-		set_text(LANG, 'pluginIsEnabled', '`>` The *plugin* is *already enabled*.')
-		set_text(LANG, 'pluginNoEnabled', '`>` The *plugin* is *already disabled*.')
-		set_text(LANG, 'pluginsReload', '`>` *Plugins reloaded!*')
-
-		set_text(LANG, 'pluginEnabled', '`>` The *plugin* has been *enabled*.')
-		set_text(LANG, 'pluginDisabled', '`>` The *plugin* has been *disabled*.')
-
-				-- private.lua--
-	
-		set_text(LANG, 'privateMSG', '`>` Sorry, this command only works *in a private chat with the bot.*')
-		set_text(LANG, 'privateError', '`>` An error occuried.')
-		set_text(LANG, 'privateSuper', '`>` Group created, migrated to supergroup and promoted to admin!')
-		
-		
-		------------
-		-- Usages --
-		------------
-
-
-		-- commands.lua --
-		set_text(LANG, 'commands:0', 2)
-		set_text(LANG, 'commands:1', '#commands: Show all commands for every plugin.')
-		set_text(LANG, 'commands:2', '#commands [plugin]: Commands for that plugin.')
-
-		-- export_gban.lua --
-	--	set_text(LANG, 'export_gban:0', 2)
-	--	set_text(LANG, 'export_gban:1', '#gbans installer: Return a lua file installer to share gbans and add those in another bot in just one command.')
-	--	set_text(LANG, 'export_gban:2', '#gbans list: Return an archive with a list of gbans.')
-
-		-- gban_installer.lua --
-	--	set_text(LANG, 'gban_installer:0', 1)
-	--	set_text(LANG, 'gban_installer:1', '#install gbans: add a list of gbans into your redis db.')
-
-		-- welcome.lua --
-        set_text(LANG, 'welcome:0', 3)
-        set_text(LANG, 'welcome:1', '#setwelcome [text for welcome]. You can make a custom welcome for this chat. Put a "0" to set the default welcome.')
-        set_text(LANG, 'welcome:2', '#getwelcome - returns the current welcome in this chat')
-        set_text(LANG, 'welcome:3', '#welcome on/off - enable/disable welcome in this chat')
-
-		-- giverank.lua --
-		set_text(LANG, 'promote:0', 6)
-		set_text(LANG, 'promote:1', '#admin (reply): add admin by reply.')
-		set_text(LANG, 'promote:2', '#admin <user_id>/<user_name>: add admin by user ID/Username.')
-		set_text(LANG, 'promote:3', '#mod (reply): add mod by reply.')
-		set_text(LANG, 'promote:4', '#mod <user_id>/<user_name>: add mod by user ID/Username.')
-		set_text(LANG, 'promote:5', '#user (reply): remove admin by reply.')
-		set_text(LANG, 'promote:6', '#user <user_id>/<user_name>: remove admin by user ID/Username.')
-
-		-- id.lua --
-		set_text(LANG, 'id:0', 1)
-		set_text(LANG, 'id:1', '#id (or reply): Return your ID and the chat id if you are in one.')
-
-		-- moderation.lua --
-		set_text(LANG, 'moderation:0', 7)
-		set_text(LANG, 'moderation:1', '#kick <reply>/<id>/<username>: the user will be kicked in the current chat.')
-		set_text(LANG, 'moderation:2', '#ban <reply>/<id>/<username>: the user will be banned in the current chat and it wont be able to return.')
-		set_text(LANG, 'moderation:3', '#unban <reply>/<id>/<username>: the user will be unbanned in the current chat.')
-		set_text(LANG, 'moderation:4', '#gban <reply>/<id>/<username>: the user will be banned from all chats and it wont be able to enter.')
-		set_text(LANG, 'moderation:5', '#ungban <reply>/<id>/<username>: the user will be unbanned from all chats.')
-		set_text(LANG, 'moderation:6', '#mute <reply>/<id>/<username>: the user will be silenced in the current chat, erasing all its messages.')
-		set_text(LANG, 'moderation:7', '#unmute <reply>/<id>/<username>: the user will be unsilenced in the current chat.')
-
-		-- settings.lua --
-	    set_text(LANG, 'settings:0', 20)
-		set_text(LANG, 'settings:1', '#tgservices on/off: when disabled, all telegram service messages will be cleared.')
-		set_text(LANG, 'settings:2', '#invite on/off: when disabled, all new invited participants will be cleared.')
-		set_text(LANG, 'settings:3', '#lang <language (en, es...)>: changes the language of the bot.')
-		set_text(LANG, 'settings:4', '#photos on/off: when disabled, all photos will be cleared.')
-		set_text(LANG, 'settings:5', '#videos on/off: when disabled, all videos will be cleared.')
-		set_text(LANG, 'settings:6', '#stickers on/off: when disabled, all stickers will be cleared.')
-		set_text(LANG, 'settings:7', '#gifs on/off: when disabled, all gifs will be cleared.')
-	   	set_text(LANG, 'settings:8', '#voice on/off: when disabled, all voicess will be cleared.')
-	    set_text(LANG, 'settings:9', '#audios on/off: when disabled, all audios will be cleared.')
-		set_text(LANG, 'settings:10', '#documents on/off: when disabled, all documents will be cleared.')
-		set_text(LANG, 'settings:11', '#location on/off: when disabled, all locations will be cleared.')
-		set_text(LANG, 'settings:12', '#games on/off: when disabled, all games will be cleared.')
-	    set_text(LANG, 'settings:13', '#spam on/off: when disabled, all spam messages will be cleared.')
-		set_text(LANG, 'settings:14', '#forward on/off: when disabled, all forwarded messages will be cleared.')
-		set_text(LANG, 'settings:15', '#floodtime <secs>: set the time that bot uses to check flood. Set 0 to desactivate.')
-	    set_text(LANG, 'settings:16', '#maxflood <msgs>: set the maximum messages in a floodtime to be considered as flood. Set 0 to desactivate.')
-	    set_text(LANG, 'settings:17', '#links on/off: when disabled, all links will be cleared.')
-	    set_text(LANG, 'settings:18', '#arabic on/off: when disabled, all messages with arabic/persian will be cleared.')
-		set_text(LANG, 'settings:19', '#english on/off: when disabled, all messages with english letters will be cleared.')
-	    set_text(LANG, 'settings:20', '#emoji on/off: when disabled, all messages with emoji will be cleared.')
-	    -- set_text(LANG, 'settings:5', '#bots on/off: when disabled, if someone adds a bot, it will be kicked.')
-
-		if matches[1] == 'install' then
-			return '`>` *Português* foi instalado com êxito no seu bot.'
-		elseif matches[1] == 'update' then
-			return '`>` *Português* foi atualizado com sucesso em seu bot.'
-		end
-	else
-		return "`>` Este plugin *requer* o uso de privilégios *sudo*."
-	end
-end
-
+-- new traduction version 3.0 by @Jarriz --
 return {
-	patterns = {
-		'[!/#](install) (portuguese_lang)$',
-		'[!/#](update) (portuguese_lang)$'
-	},
-	run = run
+	["pt"] = {
+		translation = {
+			version = "3.0",
+			versionExtended = "Versão da tradução 3.0",
+			lang_credits = "Traduzido por @Wesley_Henr"
+		},
+
+		errors = {
+			require_sudo = "Este plugin requer privilégios de sudo.",
+			require_admin = "Este plugin requer privilégios de administrador ou superior.",
+			require_mod = "Este plugin requer privilégios de moderador ou superior.",
+			not_sp = "<b>Error:</b> tiene que ser un supergrupo.",
+			not_sp_adm = "<b>Error:</b> tiene que ser un supergrupo y admin del chat.",
+			linkError = "`>` Se necesita *permisos de creador* para exportar el link de invitación del chat."
+		},
+
+		welcome = {
+			on = "Bem-vindo ativado.",
+			on = "Bem-vindo desativado.",
+			default_warn = "O bem-vindo é o padrão.",
+			new = "Bem-vindo salvo! é %s",
+			default = "Bem-vindo %s ao grupo!",
+		},
+
+		stats = {
+			msg = "*Estadísticas del chat*",
+		},
+
+		settings = {
+			user = "El usuario",
+			isFlooding = "*está haciendo flood.*",
+			isSpamming = "*está haciendo spam.*",
+
+			welcomeT = "> *Mensajes de bienvenida activados* en este chat.",
+			noWelcomeT = "> *Mensajes de bienvenida desactivados* en este chat.",
+
+			noStickersT = "`>` *Stickers* no permitidos en este chat.",
+			stickersT = "`>` *Stickers* permitidos en este chat.",
+
+			noTgservicesT = "`>` *Servicios de Telegram silenciados* en este chat.",
+			tgservicesT = "`>` *Servicios de Telegram visibles* en este chat.",
+
+			gifsT = "`>` *Gifs permitidos* en este chat.",
+			noGifsT = "`>` *Gifs no permitidos* en este chat.",
+
+			photosT = "`>` *Fotos permitidas* en este chat.",
+			noPhotosT = "`>` *Fotos no permitidas* en este chat.",
+
+			botsT = "`>` *Bots permitidos* en este chat.",
+			noBotsT = "`>` *Bots no permitidos* en este chat.",
+
+			arabicT = "`>` El *árabe* está *permitido* en este chat.",
+			noArabicT = "`>` El *árabe* *no está permitido* en este chat.",
+
+			audiosT = "`>` *Audios permitidos* en este chat",
+			noAudiosT = "`>` *Audios no permitidos* en este chat.",
+
+			documentsT = "`>` *Documentos permitidos* en este chat.",
+			noDocumentsT = "`>` *Documentos no permitidos* en este chat.",
+
+			videosT = "`>` *Videos permitidos* en este chat.",
+			noVideosT = "`>`  *Videos no permitidos* en este chat.",
+
+			locationT = "`>` *Ubicaciones permitidas* en este chat.",
+			noLocationT = "`>`  *Ubicaciones no permitidas* en este chat.",
+
+			emojisT = "`>` *Emojis permitidos* en este chat.",
+			noEmojisT = "`>`  *Emojis no permitidos* en este chat.",
+
+			englishT = "`>` *Inglés permitido* en este chat.",
+			noEnglishT = "`>` *Inglés no permitido* en este chat.",
+
+			inviteT = "`>` *Invitaciones permitidas* en este chat.",
+			noInviteT = "`>`  *Invitaciones no permitidas* en este chat.",
+
+			voiceT = "`>` *Audios de voz permitidos* en este chat.",
+			noVoiceT = "`>` *Audios de voz no permitidos* en este chat.",
+
+			infoT = "`>` *La foto/título* se puede cambiar en este chat.",
+			noInfoT = "`>` *La foto/título* no se puede cambiar en este chat.",
+
+			gamesT = "`>` *Juegos permitidos* en este chat.",
+			noGamesT = "`>` *Juegos no permitidos* en este chat.",
+
+			spamT = "`>` *Spam permitido* en este chat.",
+			noSpamT = "`>` *Spam no permitido* en este chat.",
+			setSpam = "`>` Se cambió la lista negra a ",
+
+			forwardT = "`>` *Reenviar mensajes está permitido* en este chat.",
+			noForwardT = "`>` *Reenviar mensajes no está permitido* en este chat.",
+
+			floodT = "`>` *Flood permitido* en este chat.",
+			noFloodT = "`>` *Flood no permitido* en este chat.",
+
+			floodTime = "`>` *Tiempo máximo de flood* establecido a  ",
+			floodMax = "`>` *Número máximo de mensajes* para flood establecido a ",
+
+			gSettings = "Ajustes del grupo",
+
+			allowed = "permitido",
+			noAllowed = "no permitido",
+			noSet = "no establecido",
+
+			stickers = "Stickers",
+			tgservices = "Servicios de Telegram",
+			links = "Enlaces",
+			arabic = "Árabe",
+			bots = "Bots",
+			gifs = "Gifs",
+			photos = "Fotos",
+			audios = "Audios",
+			spam = "Spam",
+			gName = "Nombre del grupo",
+			flood = "Flood",
+			language = "Idioma",
+			mFlood = "Límite de flood",
+			tFlood = "Tiempo de flood",
+			setphoto = "Establecer foto",
+
+			forward = "Reenviar",
+			videos = "Videos",
+			invite = "Invitación",
+			games = "Juegos",
+			documents = "Documentos",
+			location = "Ubicación",
+			voice = "Voz",
+			icontitle = "Cambiar icono/título",
+			english = "Inglés",
+			emojis = "Emojis",
+
+			--Hecho con @TgTextBot por @iicc1
+
+			groupSettings = "Configuración del grupo",
+			allowedMedia = "Multimedia Permitidos",
+			settingsText = "T̲e̲x̲t̲o",
+
+
+			langUpdated = "Su idioma ha sido actualizado a: %s",
+
+			linkSet = "`>` Un *nuevo link* ha sido *establecido*"
+		},
+
+		rules = {
+			newRules = "`>` *Nuevas normas creadas.*",
+			rulesDefault = "`>` Tus anteriores *normas han sido eliminadas.*",
+			noRules = "`>` *No hay normas visibles* en este grupo.",
+
+			defaultRules = "*Normas del chat:*\n`>` No hacer Flood.\n`>` No hacer Spam.\n`>` Intenta permanecer en el tema.\n`>` Prohibido cualquier contenido racista, sexual, gore......\n\n_El incumplimiento reiterado de estas normas puede comportar el ban._"
+		},
+
+		promote = {
+			alreadyAdmin = "Este usuário já é um *admin.*: %s",
+			alreadyMod = "Este usuário já é um *mod.*",
+
+			newAdmin = "<code>></code> <b>Nuevo admin</b>",
+			newMod = "<code>></code> <b>Nuevo mod</b>",
+			nowUser = "<code>></code> %s <b>es ahora un usuario.</b>",
+
+			modList = "`>` *Lista de Moderadores*",
+			adminList = "`>` *Lista de Administradores",
+			modEmpty = "*Lista de moderadores está vazia* neste grupo.",
+			adminEmpty = "*Lista de administradores vazia.*",
+			banall = "<b>Intentando banear a todos los usuarios...</b>",
+			setAbout = "<b>Bio del bot cambiada a:</b> %s",
+			leave = "<b>Adiós!</b>"
+		},
+
+		gbans = {
+			accountsGban = "cuentas globalmente baneadas.",
+			gbans = "<b>Usuarios baneados globalmente (%i) :</b>\n",
+			gbanLua = "%i usuarios baneados globalmente del archivo LUA!",
+			gbanJson = "%i usuarios baneados globalmente del archivo JSON!",
+			gbanDel = "Base de datos de los Gbans eliminado."
+		},
+
+		id = {
+			user = "Usuario",
+			chatName = "Nombre del Chat",
+			chat = "Chat",
+			dataId = "*ID del usuario*: %i\n*ID del chat*: %d",
+			userID = "*ID del usuario:*",
+			chatID = "*ID del chat:*"
+		},
+
+		moderation = {
+			kickUser = "`>` El usuario ha sido *expulsado.*",
+			banUser = "`>` El usuario ha sido *baneado.*",
+			unbanUser = "`>` El usuario ha sido *borrado* de la lista *baneados.*",
+			gbanUser = "`>` EL usuario ha sido *baneado globalmente*.",
+			ungbanUser = "`>` El usuario ha sido *borrado* de la *lista de baneados globales. *",
+			muteUser = "`>` El usuario ha sido *silenciado.*",
+			muteChat = "`>` El chat ha sido *silenciado.*",
+			muteChatSec = "`>` EL chat ha sido *silenciado* durante %i segundos.",
+			muteUserSec = "`>` El usuario ha sido *silenciado* durante %i segundos.",
+			unmuteUser = "`>` El usuario *puede hablar ahora.*",
+			unmuteChat = "`>` Los usuarios *pueden hablar ahora.*",
+
+			delAll = "`>` Todos los mensajes han sido *eliminados*.",
+			delXMsg = "`>` Al usuario %s *se le han eliminado* `%i mensajes`."
+		},
+
+		commands = {
+			commandsT = "Comandos",
+			errorNoPlug = "Este plugin no existe o no tiene comandos.",
+
+			msg_user = ''
+			.."#commands: Muestra los comandos para todos los plugins."
+			.."#commands [plugin]: Comandos para ese plugin.",
+
+			msg = ''
+			-- Commands.lua
+			-- Gbans.lua
+			--.."#gbans installer: Devuelve un archivo lua instalador para compartir gbans y añadirlos en otro bot con un único comando."
+			--.."#gbans list: Devuelve un archivo con la lista de gbans."
+			--.."#install gbans: añade una lista de gbans en tu base de datos redis."
+
+			-- Welcome.lua
+			.."#setwelcome [Texto para bienvenida]. Puede realizar una bienvenida personalizada para este chat. Ponga un '0' para establecer la recepción predeterminada."
+			.."#getwelcome - Devuelve la bienvenida actual en este chat"
+			.."#welcome on/off - Activar/desactivar la bienvenida en este chat"
+
+			-- Promote.lua
+			.."#admin (reply): Convierte la persona a la que respondes en admin"
+			.."#admin <user_id>/<user_name>: Añade un admin mediante su ID/Username."
+			.."#mod (reply): Convierte la persona a la que respondes en mod."
+			.."#mod <user_id>/<user_name>: Añade un mod mediante su ID/Username."
+			.."#user (reply): Convierte a la persona a la que respondes en usuario."
+			.."#user <user_id>/<user_name>: Convierte un usuario mediante su ID/Usuario a usuario normal."
+
+			-- Id.lua
+			.."#id (or reply): devuelve tu id y la del chat si estás en alguno."
+
+			-- Moderation.lua
+			.."#kick <reply>/<id>/<username>: El usuario será eliminado en el chat actual."
+			.."#ban <reply>/<id>/<username>: El usuario será bloqueado en el chat actual y no será capaz de volver."
+			.."#unban <reply>/<id>/<username>: El usuario quedará desbloqueado en el chat actual."
+			.."#gban <reply>/<id>/<username>: El usuario será bloqueado de todos los chats y no será capaz de entrar."
+			.."#ungban <reply>/<id>/<username>: El usuario será desbloqueado de todos los chats."
+			.."#mute <reply>/<id>/<username>: El usuario se silenciará en el chat actual, borrando todos sus mensajes."
+			.."#unmute <reply>/<id>/<username>: el usuario puede hablar en el chat actual."
+
+			-- settings.lua
+			.."#tgservices on/off: Cuando está inhabilitado, se borrarán todos los mensajes de los servicios de telegram."
+			.."#invite on/off: Cuando está inhabilitado, todos los nuevos participantes invitados serán eliminados."
+			.."#lang <language (en, es...)>: Cambia el idioma del bot."
+			.."#photos on/off: Cuando se inhabilita, se borrarán todas las fotos."
+			.."#videos on/off: Cuando está inhabilitado, todos los videos se borrarán."
+			.."#stickers on/off: Cuando está inhabilitado, todos las stickers serán borradas."
+			.."#gifs on/off: Cuando está deshabilitado, todos los gifs se borrarán."
+			.."#voice on/off: Cuando está deshabilitado, todos los mensajes de voz serán borrados."
+			.."#audios on/off: Cuando está inhabilitado, todos los audios serán borrados."
+			.."#documents on/off: Cuando está inhabilitado, todos los documentos serán borrados."
+			.."#location on/off: Cuando está inhabilitado, todas las ubicaciones serán borradas."
+			.."#games on/off: Cuando está inhabilitado, todos los juegos serán borrados."
+			.."#spam on/off: Cuando está deshabilitado, todos los mensajes de spam se borrarán."
+			.."#forward on/off: Cuando está deshabilitado, se borrarán todos los mensajes reenviados."
+			.."#floodtime <secs>: Establecer el tiempo que bot utiliza para comprobar el flood. Ajuste 0 para desactivar."
+			.."#maxflood <msgs>: Establecer el máximo de mensajes en un tiempo de flood para ser considerado como flood. Ajuste 0 para desactivarlo."
+			.."#links on/off: Cuando está deshabilitado, todos los enlaces se borrarán."
+			.."#arabic on/off: Cuando está inhabilitado, todos los mensajes con árabe/persa serán borrados."
+			.."#english on/off: Cuando está deshabilitado, se borrarán todos los mensajes con letras en inglés."
+			.."#emoji on/off: Cuando está inhabilitado, todos los mensajes con emoji serán borrados."
+			.."#bots on/off: Cuando está inhabilitado, si alguien añade un bot, se pateará."
+		},
+
+		private = {
+			start = "*Welcome!*\n\nThis is a *DBTeamV2 TDCli* _userbot_.\n\nLook here how to use the bot: http://telegra.ph/DBTeamV2-Tutorial-English-02-26\n\n*Official channels:* @DBTeamEN @DBTeamES @DBTeam\n\nSource code (Github): https://git.io/DBTeamV2",
+			msg = "`>` Perdona, este comando solo funciona *en un chat privado con el bot.*",
+			error = "`>` Ha habido un error.",
+			super = "`>` Grupo creado, migrado a supergrupo y promoteado a admin!"
+		},
+
+		plugins = {
+			activated = "*Plugins activados:*\n",
+			noExist = "`>` *El plugin* %s *no existe*.",
+			isEnabled = "`>` *El plugin* está *actualmente activado*.",
+			noEnabled = "`>` *El plugin* está *actualmente desactivado*.",
+			reload = "`>` *Plugin recargados!*",
+
+			enabled = "`>` El *plugin* ha sido *activado*.",
+			disabled = "`>` El *plugin* ha sido *desactivado*."
+		}
+
+	}
 }

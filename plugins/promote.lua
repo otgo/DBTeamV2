@@ -25,13 +25,13 @@ local function run(msg, matches)
 			if msg.reply_id then
 				redis:sadd('admins', msg.replied.id)
 				redis:srem('mods:'..msg.to.id, msg.replied.id)
-				send_msg(msg.to.id, lang_text(msg.to.id, 'newAdmin') .. ": @" .. (msg.replied.username or msg.replied.first_name), "html")
+				send_msg(msg.to.id, gettext(ln.promote.alreadyAdmin, msg.replied.username or msg.replied.first_name), "html")
 			elseif not is_number(matches[2]) then
 				resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "promote_admin", command = "admin"})
 			elseif is_number(matches[2]) then
 				redis:sadd('admins', matches[2])
 				redis:srem('mods:'..msg.to.id, matches[2])
-				send_msg(msg.to.id, lang_text(msg.to.id, 'newAdmin') .. ": " .. matches[2], "html")
+				send_msg(msg.to.id, gettext(ln.promote.newAdmin, blocks[2]), "html")
 			end
 		end
 	elseif matches[1] == "mod" then
@@ -41,7 +41,7 @@ local function run(msg, matches)
 				if new_is_sudo(msg.from.id) then
 					redis:srem('admins', msg.replied.id)
 				end
-				send_msg(msg.to.id, lang_text(msg.to.id, 'newMod') .. ": @" .. (msg.replied.username or msg.replied.first_name), "html")
+				send_msg(msg.to.id, gettext(ln.promote.newMod, msg.replied.username and "@"..msg.replied.username or msg.replied.first_name), "html")
 			elseif not is_number(matches[2]) then
 				resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "promote_mod", command = "mod"})
 			elseif is_number(matches[2]) then
@@ -49,7 +49,7 @@ local function run(msg, matches)
 				if new_is_sudo(msg.from.id) then
 					redis:srem('admins', matches[2])
 				end
-				send_msg(msg.to.id, lang_text(msg.to.id, 'newMod') .. ": " .. matches[2], "html")
+				send_msg(msg.to.id, gettext(ln.promote.newMod, matches[2]), "html")
 			end
 		end
 	elseif matches[1] == "user" then
@@ -61,7 +61,7 @@ local function run(msg, matches)
 				elseif is_admin(msg.from.id) then
 					redis:srem('mods:'..msg.to.id, msg.replied.id)
 				end
-				send_msg(msg.to.id, "<code>></code> @" .. (msg.replied.username or msg.replied.first_name) .. "" ..  lang_text(msg.to.id, 'nowUser'), "html")
+				send_msg(msg.to.id, gettext(ln.promote.nowUser, msg.replied.username and "@"..msg.replied.username or msg.replied.first_name), "html")
 			elseif not is_number(matches[2]) then
 				resolve_username(matches[2], resolve_cb, {chat_id = msg.to.id, superior = msg.from.id, plugin_tag = "promote_user", command = "user"})
 			elseif is_number(matches[2]) then
@@ -71,7 +71,7 @@ local function run(msg, matches)
 				elseif is_admin(msg.from.id) then
 					redis:srem('mods:'..msg.to.id, matches[2])
 				end
-				send_msg(msg.to.id, "<code>></code> " .. matches[2] .. lang_text(msg.to.id, 'nowUser'), "html")
+				send_msg(msg.to.id, gettext(ln.promote.nowUser, matches[2]), "html")
 			end
 		end
 	elseif matches[1] == "admins" then
@@ -101,7 +101,7 @@ local function run(msg, matches)
 	end
   else
 	print("\27[32m> Not moderating this group.\27[39m")
-  end		
+  end
   if matches[1] == "users" or matches[1] == "members" or matches[1] == "tagall" then
 	  if permissions(msg.from.id, msg.to.id, "tagall") then
 		  if matches[2] then
@@ -109,7 +109,7 @@ local function run(msg, matches)
 		  else
 			getChannelMembers(msg.to.id, 0, 'Recent', 200, members_cb, {chat = msg.to.id, text = nil})
 		  end
-	  end	
+	  end
   elseif matches[1] == "bots" then
 	  if permissions(msg.from.id, msg.to.id, "tagall") then
 		  getChannelMembers(msg.to.id, 0, 'Bots', 200, bots_cb, msg.to.id)
@@ -117,14 +117,14 @@ local function run(msg, matches)
 
   elseif matches[1] == "leave" then
 	  if permissions(msg.from.id, msg.to.id, "leave") then
-		  send_msg(msg.to.id, lang_text(msg.to.id, 'leave'), 'html')
+		  send_msg(msg.to.id, gettext(ln.promote.leave), 'html')
 		  kick_user(msg.to.id, _config.our_id[1])
 	  end
   elseif matches[1] == "setabout" and matches[2] then
 	  if permissions(msg.from.id, msg.to.id, "setabout") then
 		  changeAbout(matches[2], ok_cb)
-		  send_msg(msg.to.id, lang_text(msg.to.id, 'setAbout') .. matches[2], 'html')
-	  end			
+		  send_msg(msg.to.id, gettext(ln.promote.setAbout, matches[2]), 'html')
+	  end
   end
 end
 
@@ -132,24 +132,24 @@ function members_cb(extra, data)
 	openChat(msg.to.id, opencb)
 	local count = data.total_count_
 	if not count then
-		send_msg(extra.chat, lang_text(msg.to.id, 'error1'), 'html')
+		send_msg(extra.chat, gettext(ln.errors.not_sp), 'html')
 	end
 	local count2 = count
 	text = "<b>Users (</b>"..count.."<b>):</b> \n"
 	for k,v in pairs(data.members_) do
-		if v.user_id_ then	
-			count2 = count2 - 1	
+		if v.user_id_ then
+			count2 = count2 - 1
 			resolve_id(v.user_id_, resolveid_cb, {userid = v.user_id_ , send = count2, chat = extra.chat, text = extra.text})
 		end
 	end
 end
 
 function banall_cb(extra, data)
-	send_msg(extra, lang_text(msg.to.id, 'banall'), 'html')
+	send_msg(extra, gettext(ln.promote.banall), 'html')
 	for k,user in pairs(data.members_) do
 		if user.user_id_ ~= _config.our_id[1] and not new_is_sudo(user.user_id_) and not is_admin(user.user_id_) and not is_mod(extra, user.user_id_) then
 			kick_user(extra, user.user_id_)
-		end	
+		end
 	end
 end
 
@@ -158,8 +158,8 @@ function bots_cb(extra, data)
 	local count2 = count
 	text = "<b>Bots: (</b>"..count.."<b>):</b> \n"
 	for k,v in pairs(data.members_) do
-		if v.user_id_ then	
-			count2 = count2 - 1	
+		if v.user_id_ then
+			count2 = count2 - 1
 			resolve_id(v.user_id_, resolveid_cb, {userid = v.user_id_ , send = count2, chat = extra, text = nil})
 		end
 	end
@@ -168,12 +168,12 @@ end
 function kicked_cb(extra, data)
 	local count = data.total_count_
 	if not count then
-		send_msg(extra, lang_text(msg.to.id, 'error2'), 'html')
+		send_msg(extra, gettext(ln.errors.not_sp_adm), 'html')
 	end
 	local count2 = count
 	text = "<b>Bans (</b>"..count.."<b>):</b> \n"
 	for k,v in pairs(data.members_) do
-		if v.user_id_ then	
+		if v.user_id_ then
 			count2 = count2 - 1
 			resolve_id(v.inviter_user_id_, resolveid_kicked_cb, {userid = v.inviter_user_id_ , send = count2, chat = extra, status = "kicker", idkicked = v.user_id_})
 		end
@@ -187,7 +187,7 @@ function resolveid_kicked_cb(extra,info)
 		else
 			info_from_kicker  = '<code>></code>'..info.user_.first_name_..' '
 		end
-		resolve_id(extra.idkicked, resolveid_kicked_cb, {userid = extra.idkicked , send = extra.send, chat = extra.chat, status = "kicked", infokicker = info_from_kicker })		
+		resolve_id(extra.idkicked, resolveid_kicked_cb, {userid = extra.idkicked , send = extra.send, chat = extra.chat, status = "kicked", infokicker = info_from_kicker })
 	else
 		if info then
 			if info.user_ then
@@ -214,9 +214,9 @@ function resolveid_cb(extra,info)
 	else
 		text  = text..'<code>></code> '..info.user_.first_name_.."<code>("..extra.userid..')</code>\n'
 	end
-	
+
 	if extra.send == 0 then
-		if extra.text then	
+		if extra.text then
 			text  = text..'\n<b>'..extra.text..'</b>'
 			send_msg(extra.chat, text, 'html')
 		else
