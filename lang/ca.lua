@@ -39,11 +39,11 @@ return {
 		stats = {
 			msg = "*Estadistiques del grup*"
 		},
-		
+
 		settings = {
 			user = "Usuari",
-			isFlooding = "*està fent flood.*",
-			isSpamming = "*està fent spam.*",
+			isFlooding = "Usuari %s (%i) *està fent flood.*",
+			isSpamming = "Usuari %s (%i) *està fent spam.*",
 
 			welcomeT = "> Els *missatges de benvinguda* estan ara *activats* en aquest grup.",
 			noWelcomeT = "> Els *missatges de benvinguda* estan *desactivats* en aquest grup.",
@@ -144,7 +144,7 @@ return {
 			emojis = "Emojis",
 
 			--Made with @TgTextBot by @iicc1
-			groupSettings = "Configuració del grup",
+			groupSettings = "*Configuració del grup*\n",
 			allowedMedia = "Multimèdia Permesa",
 			settingsText = "T̲e̲x̲t̲",
 

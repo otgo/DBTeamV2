@@ -510,3 +510,12 @@ function get_lang(table, msg)
     local lang = redis:hget("lang_dbteam", msg.to.id) or _config.default_lang or "en"
     return table[lang]
 end
+
+function set_lang(chat_id, lang)
+    local actual = redis:hget("lang_dbteam", chat_id) or ""
+    if actual:lower() == lang:lower() then
+        return false
+    end
+    redis:hset("lang_dbteam", chat_id, lang:lower())
+    return true
+end

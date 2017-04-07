@@ -38,12 +38,12 @@ return {
 
 		settings = {
 			user = "کاربر",
-			isFlooding = "*در حال فرستادن پيام هاي مکرر و سريع است*",
+			isFlooding = "User %s (%i) *در حال فرستادن پيام هاي مکرر و سريع است*",
 
 			welcomeT = "> پیام خوش آمد در این گروه فعال شد",
 			noWelcomeT = "> پیام خوش آمد در این گروه غیر فعال شد",
 
-			isSpamming = "*در حال فرستادن هرزنامه است.*",
+			isSpamming = "User %s (%i) *در حال فرستادن هرزنامه است.*",
 			noStickersT = "`>` `استيکر مجاز نيست در اين گروه`.",
 			stickersT = "`>` استيکر فرستادن در حال حاظر مجاز است.",
 			noTgservicesT = "`>` حذف پيام هاي مارکدون غير فعال است.",
@@ -118,7 +118,7 @@ return {
 			emojis = "ايموجي",
 
 			--Made with @TgTextBot by @iicc1
-			groupSettings = "تنظيمات گروه",
+			groupSettings = "تنظيمات گروه\n",
 			allowedMedia = "رسانه هاي مجاز",
 			settingsText = "متن ",
 			langUpdated = "زبان شما تغيير يافت به : ",

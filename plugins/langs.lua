@@ -6,48 +6,44 @@
 --                                                --
 ----------------------------------------------------
 
-local function lang_enabled(name)
+local function lang_available(name)
     for k,v in pairs(_config.enabled_lang) do
-	    if name == v then
-	        return true
-	    end
-	end
-	return false
+        if name:lower() == v:lower() then
+            return true
+        end
+    end
+    return false
 end
 
-local function lang_exists( name )
-    for k,v in pairs(langs_names()) do
-	    if name..'.lua' == v then
-	        return true
-	    end
-	end
-	return false
-end
-
-local function enable_lang(lang_name) 
-	table.insert(_config.enabled_lang, lang_name)
-	load_lang()
-	save_config()
-	send_msg(msg.to.id, "`>` This lang was correctly installed in your bot, use `#install <lang_package>` to load the translations and `#lang <lang>` to change the language.", "md")
+local function enable_lang(lang_name)
+    table.insert(_config.enabled_lang, lang_name)
+    langs = load_langs()
+    save_config()
+    send_msg(msg.to.id, "`>` The lang in this group has been setted to "..lang_name:upper(), "md")
 end
 
 local function run(msg, matches)
-	if permissions(msg.from.id, msg.to.id, "plugins") then
-		if lang_enabled(matches[2]) == true then
-			send_msg(msg.to.id, "`>` This lang is already installed, use `#install <lang_package>` to load the translations and `#lang <lang>` to change the language.", "md")
-		else
-			if lang_exists(matches[2]) == true then
-				enable_lang(matches[2])
-			else
-				send_msg(msg.to.id, "`>` This lang does not exists in `/lang` folder.", "md")
-			end
-		end
-	end
+    if permissions(msg.from.id, msg.to.id, "plugins") then
+        if matches[1] == "lang" then
+            local message
+            if lang_available(matches[2]) then
+                if set_lang(msg.to.id, matches[2]) then
+                    message = "*New lang setted*: "..matches[2]:upper()
+                else
+                    message = "This lang is already setted."
+                end
+            else
+                message = "Lang *not available*."
+            end
+            send_msg(msg.to.id, message, "md")
+        end
+    end
 end
 
 return {
-	patterns = {
-	    "^[!/#]([Ee][Nn][aA][Bb][lL]e) (%S+)$",
-		},
-	run = run
+    patterns = {
+        "^[!/#]s?e?t?(lang) (%S+)$",
+
+    },
+    run = run
 }

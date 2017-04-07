@@ -2,7 +2,8 @@
 do local _ = {
   default_lang = "en",
   enabled_lang = {
-    "english_lang"
+    "en",
+    "es"
   },
   enabled_plugins = {
     "settings",
@@ -21,7 +22,7 @@ do local _ = {
     184857844
   },
   sudo_users = {
-    184857844
+    189041244
   }
 }
 return _

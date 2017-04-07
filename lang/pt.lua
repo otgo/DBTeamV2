@@ -42,8 +42,8 @@ return {
 
 		settings = {
 			user = "El usuario",
-			isFlooding = "*está haciendo flood.*",
-			isSpamming = "*está haciendo spam.*",
+			isFlooding = "El usuario %s (%i) *está haciendo flood.*",
+			isSpamming = "El usuario %s (%i) *está haciendo spam.*",
 
 			welcomeT = "> *Mensajes de bienvenida activados* en este chat.",
 			noWelcomeT = "> *Mensajes de bienvenida desactivados* en este chat.",
@@ -115,15 +115,15 @@ return {
 			noAllowed = "no permitido",
 			noSet = "no establecido",
 
-			stickers = "Stickers",
-			tgservices = "Servicios de Telegram",
-			links = "Enlaces",
-			arabic = "Árabe",
-			bots = "Bots",
-			gifs = "Gifs",
-			photos = "Fotos",
-			audios = "Audios",
-			spam = "Spam",
+			stickers = "`>` *Stickers*: ",
+			tgservices = "`>` *Servicios de Telegram*: ",
+			links = "`>` *Enlaces*: ",
+			arabic = "`>` *Árabe*: ",
+			bots = "`>` *Bots*: ",
+			gifs = "`>` *Gifs*: ",
+			photos = "`>` *Fotos*: ",
+			audios = "`>` *Audios*: ",
+			spam = "`>` *Spam*: ",
 			gName = "Nombre del grupo",
 			flood = "Flood",
 			language = "Idioma",
@@ -144,7 +144,7 @@ return {
 
 			--Hecho con @TgTextBot por @iicc1
 
-			groupSettings = "Configuración del grupo",
+			groupSettings = "*Configuración del grupo*\n",
 			allowedMedia = "Multimedia Permitidos",
 			settingsText = "T̲e̲x̲t̲o",
 

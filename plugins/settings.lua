@@ -36,10 +36,10 @@ end
 
 local function get_exported_link(arg, data)
 	if data.message_ then
-		send_msg(arg, lang_text(arg, 'linkError'), 'md')
+		send_msg(arg, gettext(ln.errors.linkError), 'md')
 	else
 		redis:set("settings:link:" .. msg.to.id, data.invite_link_)
-		send_msg(arg, lang_text(arg, 'linkSet'), 'md')
+		send_msg(arg, gettext(ln.settings.linkSet), 'md')
 	end
 end
 
@@ -51,7 +51,7 @@ end
 local function pre_process(msg)
 	if msg.added then
 		if redis:get("moderation_group: " .. msg.to.id) then
-			for k, user in pairs (msg.added) do 
+			for k, user in pairs (msg.added) do
 				if is_gban(user.id)	then									-- checks if user is gbanned
 					kick_user(msg.to.id, user.id)
 				end
@@ -82,7 +82,7 @@ local function pre_process(msg)
 								delete_msg(msg.to.id, user.id)
 								kick_user(msg.to.id, user.id)
 							end
-						end	
+						end
 					end
 				end
 			end
@@ -98,7 +98,7 @@ local function pre_process(msg)
 			if redis:get("settings:welcome:msg:" .. msg.to.id) then
 				welcomeText = redis:get("settings:welcome:msg:" .. msg.to.id):gsub("$users", users)
 			else
-				welcomeText = lang_text(msg.to.id, 'defaultWelcome'):gsub("$users", users)
+				welcomeText = gettext(ln.welcome.default, users)
 			end
 			send_msg(msg.to.id, welcomeText, 'html')
 		end
@@ -121,14 +121,15 @@ local function pre_process(msg)
 								spam = false
 							end
 						end
-					end					
+					end
 					if spam then
 						if msg.from.username then
 							user_ = msg.from.username
 						else
 							user_ = msg.from.first_name
 						end
-						reply_msg(msg.to.id, lang_text(msg.to.id, 'user') .. " *" .. user_ .. "* (" .. msg.from.id .. ") " .. lang_text(msg.to.id, 'isSpamming'), msg.id, 'md')
+						local text = gettext(ln.settings.isSpamming, user_, msg.from.id)
+						reply_msg(msg.to.id, text, msg.id, 'md')
 						delete_msg(msg.to.id, msg.id)
 						if redis:get("settings:reports:" .. msg.to.id) then
 							send_report(msg,pattern)
@@ -181,7 +182,7 @@ local function pre_process(msg)
     elseif msg.forward and redis:get("moderation_group: " .. msg.to.id) then
         if redis:get("settings:forward:" .. msg.to.id) then
         	delete_msg(msg.to.id, msg.forward.msg_id)
-        end		
+        end
     end
     if redis:get("settings:flood:" .. msg.to.id) and redis:get("moderation_group: " .. msg.to.id) then
 	    local maxFlood = tonumber(redis:get("settings:maxFlood:" .. msg.to.id)) or 5
@@ -193,7 +194,8 @@ local function pre_process(msg)
 	        local chat = msg.to.id
 	        local username = msg.from.username or "username"
 	        if not redis:get("settings:flood:user:" .. msg.from.id) then
-	        	send_msg(msg.to.id, lang_text(chat, 'user')..' @'.. username ..' ('..msg.from.id..') ' .. lang_text(chat, 'isFlooding'), 'md')
+				local text = gettext(ln.settings.isFlooding, username, msg.from.id)
+	        	send_msg(msg.to.id, text, 'md')
 	        end
 	        redis:setex("settings:flood:user:" .. msg.from.id, 60, true)
 	        kick_user(msg.to.id, msg.from.id)
@@ -210,36 +212,36 @@ local function run(msg, matches)
 		    if permissions(msg.from.id, msg.to.id, 'set_lang') then
 		        hash = 'langset:'..msg.to.id
 		        redis:set(hash, matches[2])
-		        return lang_text(msg.to.id, 'langUpdated')..string.upper(matches[2])
+		        return gettext(ln.settings.langUpdated, string.upper(matches[2]))
 		    else
-		        return '🚫 '..lang_text(msg.to.id, 'require_sudo')
+		        return gettext(ln.errors.require_sudo)
 		    end
 		elseif matches[1]:lower() == "settings" and permissions(msg.from.id, msg.to.id, "settings") and redis:get("moderation_group: " .. msg.to.id) then
-			local settings = "*" .. lang_text(msg.to.id, 'groupSettings') .. ":*\n"
+			local settings = gettext(ln.settings.groupSettings)
 			-- Check TgServices
 			if redis:get("settings:tgservices:" .. msg.to.id) then
-				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'tgservices') .. ":* `" .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
+				settings = settings .. gettext(ln.settings.tgservices) .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
 			else
-				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'tgservices') .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
+				settings = settings .. gettext(ln.settings.tgservices) .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
 			end
 			-- Check Invite
 			if redis:get("settings:invite:" .. msg.to.id) then
-				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'invite') .. ":* `" .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
+				settings = settings .. gettext(ln.settings.invite) .. ":* `" .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
 			else
-				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'invite') .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
+				settings = settings .. gettext(ln.settings.invite) .. ":* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
 			end
 			-- Check Bots
 			if redis:get("settings:bots:" .. msg.to.id) then
-				settings = settings .. "`>` *Bots:* `" .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
+				settings = settings .. gettext(ln.settings.bots) .. lang_text(msg.to.id, 'noAllowed') .. "`\n"
 			else
-				settings = settings .. "`>` *Bots:* `" .. lang_text(msg.to.id, 'allowed') .. "`\n"
+				settings = settings .. gettext(ln.settings.bots) .. lang_text(msg.to.id, 'allowed') .. "`\n"
 			end
 			-- Check Language
 			if redis:get("langset:" .. msg.to.id) then
-				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'language') .. ":* `" .. redis:get("langset:" .. msg.to.id) .. "`\n"
+				settings = settings .. gettext(ln.settings.language) .. ":* `" .. redis:get("langset:" .. msg.to.id) .. "`\n"
 			else
 				redis:set("langset:" .. msg.to.id, 'en')
-				settings = settings .. "`>` *" .. lang_text(msg.to.id, 'language') .. ":* `" .. redis:get("langset:" .. msg.to.id) .. "`\n"
+				settings = settings .. gettext(ln.settings.language) .. ":* `" .. redis:get("langset:" .. msg.to.id) .. "`\n"
 			end
 			settings = settings.. "\n*" .. lang_text(msg.to.id, 'allowedMedia') .. " :*\n"
 			-- Check Photos
@@ -483,7 +485,7 @@ local function run(msg, matches)
 			elseif matches[2] == 'off' then
 				redis:del("settings:reports:" .. msg.to.id)
 				send_msg(msg.to.id, "`>` *Spam reports* are *disabled* in this chat.", 'md') -- translations
-			end			
+			end
 		elseif matches[1] == "arabic" and permissions(msg.from.id, msg.to.id, "settings") and redis:get("moderation_group: " .. msg.to.id) then
 			if matches[2] == 'off' then
 				redis:set("settings:arabic:" .. msg.to.id, true)
@@ -580,7 +582,7 @@ local function run(msg, matches)
 			redis:del("settings:rules:" .. msg.to.id, matches[2])
 			send_msg(msg.to.id, lang_text(msg.to.id, 'rulesDefault'), 'md')
 		end
-	
+
 end
 
 return {

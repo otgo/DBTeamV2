@@ -68,7 +68,7 @@ function create_config()
             "private"
         },
         enabled_lang = {
-            "english_lang"
+            "en"
         },
         our_id = {0},
         sudo_users = {0}

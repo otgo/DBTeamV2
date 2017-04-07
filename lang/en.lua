@@ -38,8 +38,8 @@ return {
 
 		settings = {
 			user = "User",
-			isFlooding = "*is flooding*.",
-			isSpamming = "*is spamming*.",
+			isFlooding = "User %s (%i) *is flooding*.",
+			isSpamming = "User %s (%i) *is spamming*.",
 
 			welcomeT = "> *Welcome messages* are now *enabled* in this chat.",
 			noWelcomeT = "> *Welcome messages* are *disabled* in this chat.",
@@ -141,7 +141,7 @@ return {
 
 			--Made with @TgTextBot by @iicc1
 
-			groupSettings = "G̲r̲o̲u̲p̲ s̲e̲t̲t̲i̲n̲g̲s̲",
+			groupSettings = "*G̲r̲o̲u̲p̲ s̲e̲t̲t̲i̲n̲g̲s̲*\n",
 			allowedMedia = "A̲l̲l̲o̲w̲e̲d̲ m̲e̲d̲i̲a̲",
 			settingsText = "T̲e̲x̲t̲",
 

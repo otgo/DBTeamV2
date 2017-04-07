@@ -39,11 +39,11 @@ return {
 		stats = {
 			msg = "*Estadísticas del chat*",
 		},
-		
+
 		settings = {
 			user = "El usuario",
-			isFlooding = "*está haciendo flood.*",
-			isSpamming = "*está haciendo spam.*",
+			isFlooding = "El usuario %s (%i) *está haciendo flood.*",
+			isSpamming = "El usuario %s (%i) *está haciendo spam.*",
 
 			welcomeT = "> *Mensajes de bienvenida activados* en este chat.",
 			noWelcomeT = "> *Mensajes de bienvenida desactivados* en este chat.",
@@ -144,7 +144,7 @@ return {
 
 			--Hecho con @TgTextBot por @iicc1
 
-			groupSettings = "Configuración del grupo",
+			groupSettings = "*Configuración del grupo*\n",
 			allowedMedia = "Multimedia Permitidos",
 			settingsText = "T̲e̲x̲t̲o",
 
